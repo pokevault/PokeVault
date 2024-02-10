@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+    .formoption {
+        /* height: theme(width.12); */
+        /* width: theme(width.48); */
+        background-color: inherit;
+        border-bottom-width: 2px;
+        border-left-width: 0;
+        border-right-width: 0;
+        border-top-width: 0;
+    }
+
+    .formoption:focus {
+        box-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color)
+    }
+
+    .personalformgrid {
+        display: grid;
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        grid-auto-flow: column;
+        row-gap: theme(gap.8);
+        justify-items: center;
+    }
+
+    @media (min-width: 768px) {
+        .personalformgrid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-auto-flow: row;
+            column-gap: theme(gap.10);
+            justify-items: center;
+        }
+    }
