@@ -1,0 +1,48 @@
+name: pokevault
+services:
+  api:
+    container_name: api
+    build: api
+    volumes:
+      - saves:/home/api_controller/.pokevault/
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017
+    depends_on:
+      - mongo
+    
+  frontend:
+    container_name: frontend
+    build: public
+    depends_on:
+      - api
+  
+  mongo:
+    image: mongo:latest
+    volumes:
+      - db:/data/db
+
+  mongo-express:
+    image: mongo-express:latest
+    depends_on:
+      - mongo
+      - nginx
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_SITE_BASEURL=/mongo/
+    volumes:
+      - db:/data/db
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api
+      - frontend
+      - mongo
+
+volumes:
+  saves:
+  db:

@@ -1,0 +1,44 @@
+diff --git a/dist/DateInput.svelte b/dist/DateInput.svelte
+index 3f6f941337cac7dcce69178364a23fbc8e7401cc..da618b7f586a92d538cd0ca10eb3abf05b46c7c0 100644
+--- a/dist/DateInput.svelte
++++ b/dist/DateInput.svelte
+@@ -194,11 +194,12 @@ input {
+   box-sizing: border-box;
+   padding: 4px 6px;
+   margin: 0px;
+-  border: 1px solid rgba(103, 113, 137, 0.3);
+-  border-radius: 3px;
++  border-width: 0px 0px 1px 0px;
+   width: var(--date-input-width, 150px);
+   outline: none;
+   transition: all 80ms cubic-bezier(0.4, 0, 0.2, 1);
++  text-align: center;
++  color: white;
+ }
+ input:focus {
+   border-color: var(--date-picker-highlight-border, #0269f7);
+diff --git a/dist/DatePicker.svelte b/dist/DatePicker.svelte
+index e35a6711cfda3f18ded45d3553bdb38f476ba213..c0cc01dd3c9f8356205aa869965dd46abc8d52bd 100644
+--- a/dist/DatePicker.svelte
++++ b/dist/DatePicker.svelte
+@@ -353,6 +353,11 @@ function keydown(e) {
+   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08), 0px 2px 6px rgba(0, 0, 0, 0.11);
+   outline: none;
+   transition: all 80ms cubic-bezier(0.4, 0, 0.2, 1);
++  height: 150px;
++  overflow: scroll;
++  scrollbar-width: thin;
++  position: relative;
++  right: 40px;
+ }
+ .date-time-picker:focus {
+   border-color: var(--date-picker-highlight-border, #0269f7);
+@@ -457,6 +462,8 @@ select {
+   outline: none;
+   transition: all 80ms cubic-bezier(0.4, 0, 0.2, 1);
+   background-image: none;
++  color: var(--date-picker-background);
++  text-align: center;
+ }
+ 
+ .header {

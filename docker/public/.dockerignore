@@ -1,0 +1,4 @@
+.sveltekit
+node_modules
+.vscode
+.gitignore

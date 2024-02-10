@@ -1,0 +1,4 @@
+[submodule "docker/public/src/lib/assets/ts/pokedex"]
+	path = docker/public/src/lib/assets/ts/pokedex
+	url = https://github.com/pokevault/pokedex
+	branch = submodule

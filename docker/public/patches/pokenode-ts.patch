@@ -1,0 +1,38 @@
+diff --git a/lib/index.d.ts b/lib/index.d.ts
+index 83592961a3eb1afe3d035fbfc368f8841670faeb..273e2cd619818efdaca182edbb87967d608bbb6d 100644
+--- a/lib/index.d.ts
++++ b/lib/index.d.ts
+@@ -100,6 +100,8 @@ interface FlavorText {
+     flavor_text: string;
+     /** The language this name is in */
+     language: NamedAPIResource;
++    /** The game version this flavor text appears in */
++    version: NamedAPIResource;
+ }
+ 
+ /**
+@@ -1228,6 +1230,8 @@ interface Pokemon {
+      * A visual representation of the various sprites can be found at [PokeAPI/sprites](https://github.com/PokeAPI/sprites#sprites)
+      */
+     sprites: PokemonSprites;
++    /** A set of cries used to depict this Pokémon in the game. */
++    cries: PokemonCries;
+     /** The species this Pokémon belongs to */
+     species: NamedAPIResource;
+     /** A list of base stat values for this Pokémon */
+@@ -1248,6 +1252,15 @@ interface PokemonAbility {
+     /** The ability the Pokémon may have */
+     ability: NamedAPIResource;
+ }
++/**
++ * Details of a pokémon cry
++ */
++export type PokemonCries = {
++    /** The legacy depiction of this Pokémon's cry. */
++    legacy: string;
++    /** The latest depiction of this Pokémon's cry. */
++    latest: string;
++  };
+ /**
+  * Details showing types the given Pokémon has
+  */
