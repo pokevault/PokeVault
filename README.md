@@ -1,4 +1,4 @@
-## PokéVault - v0.1
+## PokéVault - v0.1.5
 
 <img style="margin-right: 12px;" align="left" src="https://avatars.githubusercontent.com/u/154698405?s=200&u=ded331a652f3ba2ec0168cbb20f0cae52dda9ff7&v=4"></img>
 
