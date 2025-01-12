@@ -1,23 +1,22 @@
 <script lang="ts">
-    import { getModalStore, Modal } from '@skeletonlabs/skeleton';
-    import type { ModalSettings, ModalComponent, ModalStore } from '@skeletonlabs/skeleton';
+    import { getModalStore, Modal } from "@skeletonlabs/skeleton";
+    import type { ModalSettings, ModalComponent, ModalStore } from "@skeletonlabs/skeleton";
 
-    import { DateInput } from 'date-picker-svelte';
+    import { DateInput } from "date-picker-svelte";
 
-    import Svelecte from 'svelecte';
+    import Svelecte from "svelecte";
 
-    import PickerModal from '$lib/components/modals/speciesPickModal.svelte';
-    import MoveModal from '$lib/components/modals/moveSelectModal.svelte';
-    import { usedMoves } from '$lib/imports';
-    import { getLocations } from '$lib/assets/ts/locations';
-    import { getArtwork } from '$lib/assets/ts/images';
-    import { getEntry } from '$lib/assets/ts/pokedex_entry';
-    import { getTypes } from '$lib/assets/ts/type';
-    import { getNationalDex } from '$lib/assets/ts/species';
+    import PickerModal from "$lib/components/modals/speciesPickModal.svelte";
+    import MoveModal from "$lib/components/modals/moveSelectModal.svelte";
+    import { usedMoves } from "$lib/imports";
+    import { getLocations } from "$lib/assets/ts/locations";
+    import { getArtwork } from "$lib/assets/ts/images";
+    import { getEntry } from "$lib/assets/ts/pokedex_entry";
+    import { getTypes } from "$lib/assets/ts/type";
+    import { getNationalDex } from "$lib/assets/ts/species";
     import dates from "$lib/assets/json/dates.json";
     
-    import { onMount } from 'svelte';
-    import { monitorEventLoopDelay } from 'perf_hooks';
+    import { onMount } from "svelte";
 
     export let gen: number;
     export let game: string;
@@ -70,7 +69,7 @@
         let modalSettings: ModalSettings;
         let promise: string = await new Promise<string>((resolve) => {
             modalSettings = {
-                type: 'component',
+                type: "component",
                 component: pickModal,
                 meta: { game: game, gen: gen },
                 response: (r: string) => {
