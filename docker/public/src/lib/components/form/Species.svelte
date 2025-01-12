@@ -17,6 +17,7 @@
     import dates from "$lib/assets/json/dates.json";
     
     import { onMount } from 'svelte';
+    import { monitorEventLoopDelay } from 'perf_hooks';
 
     export let gen: number;
     export let game: string;
@@ -41,6 +42,20 @@
     onMount(() => {
         usedMoves.set([]);
     });
+
+    $: (() => {
+        if (chosenMon != null || chosenMon) {
+            let imgs: (string | null)[] = [getArtwork(chosenMon), getArtwork(chosenMon, true)];
+            for (let img of imgs) {
+                if (img != null) {
+                    let loaded: boolean = false;
+                    let imgElem: HTMLImageElement = new Image();
+                    imgElem.src = img;
+                    imgElem.onload = (() => { loaded = true });
+                }
+            }
+        }
+    })();
 
     const modalStore: ModalStore = getModalStore();
     const pickModal: ModalComponent = { 
@@ -94,13 +109,6 @@
      };
 
 </script>
-
-<svelte:head>
-    {#if chosenMon != null || chosenMon != undefined} 
-        <link rel="preload" as="image" href={getArtwork(chosenMon)}>
-        <link rel="preload" as="image" href={getArtwork(chosenMon, shiny)}>
-    {/if}
-</svelte:head>
 
 <Modal />
 {#if chosenMon === null || chosenMon === undefined}
