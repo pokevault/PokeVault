@@ -28,6 +28,8 @@
     
     let saveUuid: string = data.uuid;
 
+    let artLoaded: boolean = false;
+
     let soundIconVisible: boolean = false
     let playing: boolean = false;
 
@@ -62,8 +64,6 @@
             }
         }
     };
-
-    $: console.log(saveUuid);
 
     let boxIndex: string | null = $page.url.searchParams.get("i");
     let boxSlot: string | null = $page.url.searchParams.get("s");
@@ -117,12 +117,18 @@
         return resp;
     }
 
-    function play(src: string): void {
-        let audio: HTMLAudioElement = new Audio(src);
-        audio.volume = 0.5;
-        audio.play();
+    function play(elem: HTMLAudioElement): void {
+        elem.volume = 0.5;
+        elem.play();
         playing = true;
-        audio.onended = () => { playing = false };
+        elem.onended = () => { playing = false };
+    }
+
+    async function loadCry(src: string): Promise<HTMLAudioElement> {
+        return new Promise<HTMLAudioElement>((resolve) => {
+            let audio: HTMLAudioElement = new Audio(src);
+            audio.oncanplay = () => { resolve(audio) };
+        });
     }
 
     type ChartDataSet = "ivs" | "evs" | "base";
@@ -217,7 +223,8 @@
                     {/if}
                 </div>
                 <div>
-                    <img src={getArtwork(mon.species, mon.isShiny)} alt="Artwork Not Found" class="select-none">
+                    <div class="h-48 w-48 placeholder rounded-lg animate-pulse" class:hidden={artLoaded}></div>
+                    <img src={getArtwork(mon.species, mon.isShiny)} alt="Artwork Not Found" class="select-none" class:hidden={!artLoaded} on:load={() => { artLoaded = true }}>
                 </div>
                 <div class="self-center">
                     <strong class="text-center underline ml-auto mr-auto">{getSpeciesName(mon.species, true)}</strong>
@@ -241,16 +248,24 @@
                                 {#await getCry(mon.species)}
                                     <div class="w-24 placeholder animate-pulse ml-auto mr-auto"></div>
                                 {:then cry}
-                                    <button class="bg-surface-800 bg-opacity-70 w-10 h-6 relative ml-auto mr-auto rounded-full overflow-hidden transition-all hover:w-24 ease-in-out duration-500" on:mouseenter={() => { soundIconVisible = true }} on:mouseleave={() => { soundIconVisible = false }} on:touchend={() => { soundIconVisible = false }} on:click={() => play(cry)}>
-                                        <div class="w-10 h-6 rounded-full flex justify-center items-center">
-                                            <span class="iconify ri--play-fill"></span>
-                                        </div>
-                                        {#if soundIconVisible && playing}
-                                            <span class="iconify svg-spinners--bars-scale-middle absolute top-1"></span>
-                                        {:else if soundIconVisible && !playing}
-                                            <span class="iconify tabler--antenna-bars-1 absolute top-1"></span>
-                                        {/if}
-                                    </button>
+                                    {#await loadCry(cry)}
+                                        <button class="bg-surface-800 bg-opacity-70 w-10 h-6 relative ml-auto mr-auto rounded-full" disabled>
+                                            <div class="w-10 h-6 rounded-full flex justify-center items-center">
+                                                <span class="iconify svg-spinners--90-ring"></span>
+                                            </div>
+                                        </button>
+                                    {:then audioElem}
+                                        <button class="bg-surface-800 bg-opacity-70 w-10 h-6 relative ml-auto mr-auto rounded-full overflow-hidden transition-all hover:w-24 ease-in-out duration-500" on:mouseenter={() => { soundIconVisible = true }} on:mouseleave={() => { soundIconVisible = false }} on:touchend={() => { soundIconVisible = false }} on:click={() => play(audioElem)}>
+                                            <div class="w-10 h-6 rounded-full flex justify-center items-center">
+                                                <span class="iconify ri--play-fill"></span>
+                                            </div>
+                                            {#if soundIconVisible && playing}
+                                                <span class="iconify svg-spinners--bars-scale-middle absolute top-1"></span>
+                                            {:else if soundIconVisible && !playing}
+                                                <span class="iconify tabler--antenna-bars-1 absolute top-1"></span>
+                                            {/if}
+                                        </button>
+                                    {/await}
                                 {/await}
                             </div>
                             {#await getCharacteristics(mon.species)}

@@ -7,6 +7,8 @@
 	import { initializeStores } from '@skeletonlabs/skeleton';
     import { onMount } from 'svelte';
 
+	import storage from "localstorage-slim";
+
 	let dropdown: boolean = false;
 	let clicked: boolean = false;
 
@@ -18,9 +20,15 @@
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
 	function chooseIcon(): string {
-		let selection: number = Math.floor(Math.random() * 4);
 		let icons: string[] = ["ball.png", "great-ball.png", "master-ball.png", "ultra-ball.png"];
-		return "/assets/"+icons[selection];
+		if (storage.get("i") == null) {
+			let selection: number = Math.floor(Math.random() * 4);
+			storage.set("i", selection, { ttl: 60*60*24 });
+			return "/assets/"+icons[selection];
+		} else {
+			let selection: number | null = storage.get("i");
+			return "/assets/"+icons[selection ?? 0];
+		}
 	}
 
 	let icon: string;
@@ -31,7 +39,7 @@
 </script>
 
 <svelte:head>
-	<link rel="shortcut icon" href={icon} type="image/x-icon">
+	<link rel="shortcut icon" href={icon} type="image/png">
 </svelte:head>
 
 <body>
