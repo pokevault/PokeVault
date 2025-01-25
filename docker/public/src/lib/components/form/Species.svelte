@@ -15,12 +15,13 @@
     import { getTypes } from "$lib/assets/ts/type";
     import { getNationalDex } from "$lib/assets/ts/species";
     import dates from "$lib/assets/json/dates.json";
+    import type { FormSchema } from "$lib/schema";
     
     import { onMount } from "svelte";
 
     export let gen: number;
     export let game: string;
-    export let data: any;
+    export let data: FormSchema;
 
     data.evSpecial = 0;
     data.evSpecDef = 0;
@@ -32,7 +33,7 @@
 
     let shinyToggle: (e: Event) => void = (e) => { e.preventDefault(); shiny = !shiny; };
 
-    $: data.species = chosenMon ?? "";
+    $: data.species = chosenMon ?? 0;
 
     $: data.isShiny = shiny;
 
@@ -83,7 +84,7 @@
 
     let modalSettings: ModalSettings;
 
-    let level: string = "0";
+    let level: number = 0;
 
     $: data.level = level;
 
