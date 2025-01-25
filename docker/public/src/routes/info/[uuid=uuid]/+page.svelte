@@ -257,7 +257,6 @@
                                             </div>
                                         </button>
                                     {:then audioElem}
-                                        <button class="bg-surface-800 bg-opacity-70 w-10 h-6 relative ml-auto mr-auto rounded-full overflow-hidden transition-[width] hover:w-24 ease-in-out duration-500" on:mouseenter={() => { soundIconVisible = true }} on:mouseleave={() => { soundIconVisible = false }} on:touchend={() => { soundIconVisible = false }} on:click={() => play(audioElem)}>
                                             <div class="w-10 h-6 rounded-full flex justify-center items-center">
                                                 <span class="iconify ri--play-fill"></span>
                                             </div>
@@ -265,6 +264,7 @@
                                                 <span class="iconify svg-spinners--bars-scale-middle absolute top-1"></span>
                                             {:else if soundIconVisible && !playing}
                                                 <span in:fade={{ duration: 500 }} out:fade={{ duration: 250 }} class="iconify tabler--antenna-bars-1 absolute top-1"></span>
+                                                <span class="iconify tabler--antenna-bars-1 absolute top-1"></span>
                                             {/if}
                                         </button>
                                     {/await}
