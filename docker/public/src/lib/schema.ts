@@ -22,6 +22,8 @@ export const formSchema = z.object({
     additionalNotes: z.string().nullish()
 });
 
+export type FormSchema = z.infer<typeof formSchema>;
+
 export const notesSchema = z.object({
     notes: z.string({ message: "Please type something... Anything..." })
 });

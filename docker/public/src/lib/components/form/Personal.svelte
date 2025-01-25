@@ -4,7 +4,9 @@
 
     import TrainerCard from '$lib/components/form/Trainer.svelte';
 
-    export let data: any;
+    import type { FormSchema } from '$lib/schema';
+
+    export let data: FormSchema;
 
     const OTinputPopup: PopupSettings = {
         event: 'focus-click',
