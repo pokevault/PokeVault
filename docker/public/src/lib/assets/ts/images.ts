@@ -18,8 +18,8 @@ export function getArtwork(mon: number, shiny: boolean = false): string | null {
 }
 
 export function getSprite(mon: number, shiny: boolean = false): string | null {
-    let regular_url: string = "https://cdn.jsdelivr.net/gh/pokevault/icons/pokemon/regular/";
-    let shiny_url: string = "https://cdn.jsdelivr.net/gh/pokevault/icons/pokemon/shiny/";
+    let regular_url: string = "https://cdn.jsdelivr.net/gh/pokevault/icons@HEAD/pokemon/regular/";
+    let shiny_url: string = "https://cdn.jsdelivr.net/gh/pokevault/icons@HEAD/pokemon/shiny/";
     for (var entry of dex) {
         let name: number = entry.pokedex_number;
         if (name === mon) {
